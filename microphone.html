@@ -1,59 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vapi Assistant</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with AI</title>
+    <style>
+        /* Styles for chatbot overlay */
+        #chatbot-container {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -3px 0px 10px rgba(0,0,0,0.2);
+            border-left: 1px solid #ccc;
+            z-index: 10000;
+        }
+        #chatbot-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #close-chat {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-  <!-- Your Vapi Assistant integration code -->
-  <script>
-    var vapiInstance = null;
-    const assistant = "17660484-6604-4c24-b679-06cbc996d14c"; // Your assistant ID
-    const apiKey = "8ce6ddf6-3976-4031-9a2e-caf26726146b"; // Your public key from Vapi Dashboard.
-    const buttonConfig = {
-      offset: "60px",
-      width: "80px",
-      height: "80px",
-      idle: {
-        color: "#FF8000",
-        type: "round",
-        title: "Have a quick question?",
-        subtitle: "Talk with our AI assistant",
-        icon: "https://unpkg.com/lucide-static@0.321.0/icons/phone.svg",
-      },
-      loading: {
-        color: "rgb(93, 124, 202)",
-        type: "round",
-        title: "Connecting...",
-        subtitle: "Please wait",
-        icon: "https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg",
-      },
-      active: {
-        color: "rgb(255, 0, 0)",
-        type: "round",
-        title: "Call is in progress...",
-        subtitle: "End the call.",
-        icon: "https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg",
-      },
-    };
 
-    (function (d, t) {
-      var g = document.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-      g.defer = true;
-      g.async = true;
-      s.parentNode.insertBefore(g, s);
+    <div id="chatbot-container">
+        <button id="close-chat" onclick="document.getElementById('chatbot-container').style.display='none'">X</button>
+        <iframe src="https://connxr.com/chat"></iframe>
+    </div>
 
-      g.onload = function () {
-        vapiInstance = window.vapiSDK.run({
-          apiKey: apiKey,
-          assistant: assistant,
-          config: buttonConfig,
-        });
-      };
-    })(document, "script");
-  </script>
 </body>
 </html>
