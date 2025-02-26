@@ -4,63 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with AI</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let referrerURL = document.referrer || localStorage.getItem("linkedinURL");
-
-            // Ensure it's a LinkedIn page before injecting the chatbot
-            if (referrerURL && referrerURL.includes("linkedin.com")) {
-                localStorage.setItem("linkedinURL", referrerURL); // Store LinkedIn URL
-                injectChatbot(); // Open chatbot overlay
-                history.replaceState(null, "", referrerURL); // Change URL without reloading
-            }
-        });
-
-        function injectChatbot() {
-            let chatbot = document.createElement("div");
-            chatbot.id = "chatbot-container";
-            chatbot.innerHTML = `
-                <style>
-                    #chatbot-container {
-                        position: fixed;
-                        right: 0;
-                        top: 0;
-                        width: 350px;
-                        height: 100vh;
-                        background: white;
-                        box-shadow: -3px 0px 10px rgba(0,0,0,0.2);
-                        border-left: 1px solid #ccc;
-                        z-index: 10000;
-                    }
-                    #chatbot-container iframe {
-                        width: 100%;
-                        height: 100%;
-                        border: none;
-                        allow: camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;
-                    }
-                    #close-chat {
-                        position: absolute;
-                        top: 10px;
-                        right: 10px;
-                        background: transparent;
-                        color: white;
-                        font-size: 24px;
-                        font-weight: bold;
-                        border: none;
-                        cursor: pointer;
-                        outline: none;
-                    }
-                </style>
-                <button id="close-chat" onclick="document.getElementById('chatbot-container').remove()">✖</button>
-                <iframe src="https://gmorgan1001.github.io/mic-access/index.html"></iframe>
-            `;
-            document.body.appendChild(chatbot);
+    <style>
+        /* Fullscreen container */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
-    </script>
+
+        /* Wrapper to hold both iframes */
+        #wrapper {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* Left iframe (LinkedIn page) */
+        #linkedin-frame {
+            flex: 3;
+            height: 100vh;
+            border: none;
+        }
+
+        /* Right iframe (Chatbot overlay) */
+        #chatbot-frame {
+            flex: 1;
+            height: 100vh;
+            border-left: 2px solid #ccc;
+            border: none;
+        }
+    </style>
 </head>
 <body>
 
-    <h2>Redirecting back to LinkedIn...</h2>
+    <div id="wrapper">
+        <!-- Left iframe loads LinkedIn -->
+        <iframe id="linkedin-frame"></iframe>
+
+        <!-- Right iframe for the chatbot -->
+        <iframe id="chatbot-frame" src="https://gmorgan1001.github.io/mic-access/chatbot.html" allow="microphone; camera;"></iframe>
+    </div>
+
+    <script>
+        // Capture referrer URL (LinkedIn page user came from)
+        let linkedInURL = document.referrer || localStorage.getItem("linkedinURL");
+
+        if (linkedInURL && linkedInURL.includes("linkedin.com")) {
+            localStorage.setItem("linkedinURL", linkedInURL); // Store for later
+        } else {
+            linkedInURL = localStorage.getItem("linkedinURL") || "https://www.linkedin.com/";
+        }
+
+        // Load LinkedIn article inside the left iframe
+        document.getElementById("linkedin-frame").src = linkedInURL;
+    </script>
 
 </body>
 </html>
