@@ -21,7 +21,7 @@
             height: 100vh;
         }
 
-        /* Left iframe (LinkedIn page) */
+        /* Left iframe (LinkedIn article) */
         #linkedin-frame {
             flex: 3;
             height: 100vh;
@@ -48,13 +48,16 @@
     </div>
 
     <script>
-        // Capture referrer URL (LinkedIn page user came from)
-        let linkedInURL = document.referrer || localStorage.getItem("linkedinURL");
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
 
-        if (linkedInURL && linkedInURL.includes("linkedin.com")) {
-            localStorage.setItem("linkedinURL", linkedInURL); // Store for later
-        } else {
-            linkedInURL = localStorage.getItem("linkedinURL") || "https://www.linkedin.com/";
+        // Get the LinkedIn article URL from query parameters
+        let linkedInURL = getQueryParam("url");
+
+        if (!linkedInURL || !linkedInURL.includes("linkedin.com")) {
+            linkedInURL = "https://www.linkedin.com/feed/"; // Default to LinkedIn feed if no article is found
         }
 
         // Load LinkedIn article inside the left iframe
