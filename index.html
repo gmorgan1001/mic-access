@@ -4,65 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with AI</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let linkedInURL = new URLSearchParams(window.location.search).get("url");
+
+            if (linkedInURL && linkedInURL.includes("linkedin.com")) {
+                setTimeout(() => {
+                    window.open(linkedInURL, "_blank"); // Open LinkedIn in a new tab
+                }, 1000); // Small delay for a better user experience
+            }
+        });
+    </script>
+
     <style>
-        /* Fullscreen container */
+        /* Fullscreen chatbot container */
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-        }
-
-        /* Wrapper to hold both iframes */
-        #wrapper {
+            background: white;
             display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Chatbot overlay */
+        #chatbot-container {
+            width: 400px;
+            height: 600px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        #chatbot-container iframe {
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            border: none;
+            allow: camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;
         }
 
-        /* Left iframe (LinkedIn article) */
-        #linkedin-frame {
-            flex: 3;
-            height: 100vh;
+        #close-chat {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
             border: none;
-        }
-
-        /* Right iframe (Chatbot overlay) */
-        #chatbot-frame {
-            flex: 1;
-            height: 100vh;
-            border-left: 2px solid #ccc;
-            border: none;
+            cursor: pointer;
+            outline: none;
         }
     </style>
 </head>
 <body>
 
-    <div id="wrapper">
-        <!-- Left iframe loads LinkedIn -->
-        <iframe id="linkedin-frame"></iframe>
-
-        <!-- Right iframe for the chatbot -->
-        <iframe id="chatbot-frame" src="https://gmorgan1001.github.io/mic-access/chatbot.html" allow="microphone; camera;"></iframe>
+    <div id="chatbot-container">
+        <button id="close-chat" onclick="document.getElementById('chatbot-container').remove()">✖</button>
+        <iframe src="https://gmorgan1001.github.io/mic-access/chatbot.html"></iframe>
     </div>
-
-    <script>
-        function getQueryParam(name) {
-            const params = new URLSearchParams(window.location.search);
-            return params.get(name);
-        }
-
-        // Get the LinkedIn article URL from query parameters
-        let linkedInURL = getQueryParam("url");
-
-        if (!linkedInURL || !linkedInURL.includes("linkedin.com")) {
-            linkedInURL = "https://www.linkedin.com/feed/"; // Default to LinkedIn feed if no article is found
-        }
-
-        // Load LinkedIn article inside the left iframe
-        document.getElementById("linkedin-frame").src = linkedInURL;
-    </script>
 
 </body>
 </html>
