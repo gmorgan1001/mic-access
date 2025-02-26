@@ -1,39 +1,47 @@
-(function() {
-    let chatbot = document.createElement("div");
-    chatbot.id = "chatbot-container";
-    chatbot.innerHTML = `
-        <style>
-            #chatbot-container {
-                position: fixed;
-                right: 0;
-                top: 0;
-                width: 350px;
-                height: 100vh;
-                background: white;
-                box-shadow: -3px 0px 10px rgba(0,0,0,0.2);
-                border-left: 1px solid #ccc;
-                z-index: 10000;
-            }
-            #chatbot-container iframe {
-                width: 100%;
-                height: 100%;
-                border: none;
-            }
-            #close-chat {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background: transparent;
-                color: white;
-                font-size: 24px;
-                font-weight: bold;
-                border: none;
-                cursor: pointer;
-                outline: none;
-            }
-        </style>
-        <button id="close-chat" onclick="document.getElementById('chatbot-container').remove()">✖</button>
-        <iframe src="https://connxr.com/chat"></iframe>
-    `;
-    document.body.appendChild(chatbot);
-})();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with AI</title>
+    <style>
+        /* Styles for chatbot overlay */
+        #chatbot-container {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -3px 0px 10px rgba(0,0,0,0.2);
+            border-left: 1px solid #ccc;
+            z-index: 10000;
+        }
+        #chatbot-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #close-chat {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chatbot-container">
+        <button id="close-chat" onclick="document.getElementById('chatbot-container').style.display='none'">X</button>
+        <iframe src="https://connxr.com/linkedin"></iframe>
+    </div>
+
+</body>
+</html>
